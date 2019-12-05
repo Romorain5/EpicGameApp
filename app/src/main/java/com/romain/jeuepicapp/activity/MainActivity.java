@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.romain.jeuepicapp.PlayersCreation;
 import com.romain.jeuepicapp.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
     // --- JOUEUR 1 ---
 
-    public String Aplayer1Name;
-    public int Aplayer1Str;
-    public int Aplayer1Int;
-    public int Aplayer1Agi;
-    public int Aplayer1Chance;
-    public int Aplayer1Level;
-    public int Aplayer1TotStats;
-    public int Aplayer1ClassID;
+    public static String Aplayer1Name;
+    public static int Aplayer1Str;
+    public static int Aplayer1Int;
+    public static int Aplayer1Agi;
+    public static int Aplayer1Chance;
+    public static int Aplayer1Level;
+    public static int Aplayer1TotStats;
+    public static int Aplayer1ClassID;
 
 
     // Joueur 1 nom et classe  :
@@ -46,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
     // --- JOUEUR 2 ---
 
-    public String Aplayer2Name;
-    public int Aplayer2Str;
-    public int Aplayer2Int;
-    public int Aplayer2Agi;
-    public int Aplayer2Chance;
-    public int Aplayer2Level;
-    public int Aplayer2TotStats;
-    public int Aplayer2ClassID;
+    public static String Aplayer2Name;
+    public static int Aplayer2Str;
+    public static int Aplayer2Int;
+    public static int Aplayer2Agi;
+    public static int Aplayer2Chance;
+    public static int Aplayer2Level;
+    public static int Aplayer2TotStats;
+    public static int Aplayer2ClassID;
 
 
     // Joueur 1 nom et classe  :
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText P2Agility;
     private EditText P2Chance;
     private Button P2TestButton;
+
+    // --- JOUEUR 1 GETTER ---
+
 
 
     @Override
@@ -192,6 +196,23 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.class_choice_marksman:
                 Aplayer1ClassID = 3;
+                break;
+
+
+        }
+    }
+
+    public void checkButton2(View v) {
+        int radioId = P2Class.getCheckedRadioButtonId();
+        switch (radioId) {
+            case R.id.class_choice_warrior:
+                Aplayer2ClassID = 1;
+                break;
+            case R.id.class_choice_wizard:
+                Aplayer2ClassID = 2;
+                break;
+            case R.id.class_choice_marksman:
+                Aplayer2ClassID = 3;
                 break;
 
 

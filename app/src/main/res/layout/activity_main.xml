@@ -134,20 +134,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Guerrier"
-            android:onClick="checkButton"/>
+            android:onClick="checkButton2"/>
 
         <RadioButton
             android:id="@+id/class_choice_wizard2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mage"
-            android:onClick="checkButton"/>
+            android:onClick="checkButton2"/>
         <RadioButton
             android:id="@+id/class_choice_marksman2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rôdeur"
-            android:onClick="checkButton"/>
+            android:onClick="checkButton2"/>
 
     </RadioGroup>
 
