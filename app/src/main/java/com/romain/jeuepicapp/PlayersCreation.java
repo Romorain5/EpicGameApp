@@ -1,43 +1,21 @@
 package com.romain.jeuepicapp;
 
+import com.romain.jeuepicapp.activity.MainActivity;
+
 import java.util.Scanner;
 
 public class PlayersCreation {
 
-    public static Character CreateCaracters(int nb){
-        int classe = 0;
-        int level = -1;
-        int strength = 0;
-        int agility = 0;
-        int intelligence = 0;
-        int luck = 0;
+    public static Character CreateCaracters(int pID, int cla, int lvl, int strg, int agi, int inte, int chance){
 
-        Scanner scan = new Scanner( System.in);
+        
 
-        System.out.println("Joueur " + nb + ", veuillez choisir la classe de votre personnage : 1- Guerrier  2- Rôdeur  3- Mage");
-        classe = scan.nextInt();
-
-
-        while ( level != (  strength + agility + intelligence + luck )  ) {
-            System.out.println("Veuillez saisir les caractéristique de votre personnge, attention la somme des statistiques ne peut pas dépasser le niveau de votre personnage !");
-            System.out.println("Niveau du personnage ?");
-            level = scan.nextInt();
-            System.out.println("Force du personnage ?");
-            strength = scan.nextInt();
-            System.out.println("Agilité du personnage ?");
-            agility = scan.nextInt();
-            System.out.println("Intelligence du personnage ?");
-            intelligence = scan.nextInt();
-            System.out.println("Chance du personnage ?");
-            luck = scan.nextInt();
-        }
-
-        if (classe == 1) {
-            return new Warrior(level, strength, agility, intelligence, nb, luck);
-        } else if (classe == 2) {
-            return new Marksman(level, strength, agility, intelligence, nb, luck);
+        if (cla == 1) {
+            return new Warrior(lvl, strg, agi, inte, pID, chance);
+        } else if (cla == 2) {
+            return new Marksman(lvl, strg, agi, inte, pID, chance);
         } else {
-            return new Wizard(level, strength, agility, intelligence, nb, luck);
+            return new Wizard(lvl, strg, agi, inte, pID, chance);
         }
 
 
