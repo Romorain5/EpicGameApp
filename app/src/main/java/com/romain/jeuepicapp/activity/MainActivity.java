@@ -9,29 +9,31 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.romain.jeuepicapp.PlayersCreation;
 import com.romain.jeuepicapp.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final  String LOG_TAG =
+            MainActivity.class.getSimpleName();
     private Button PlayButton;
 
     // --- JOUEUR 1 ---
 
-    public static String Aplayer1Name;
-    public static int Aplayer1Str;
-    public static int Aplayer1Int;
-    public static int Aplayer1Agi;
-    public static int Aplayer1Chance;
-    public static int Aplayer1Level;
-    public static int Aplayer1TotStats;
-    public static int Aplayer1ClassID;
+    public String Aplayer1Name;
+    public  int Aplayer1Str;
+    public  int Aplayer1Int;
+    public  int Aplayer1Agi;
+    public  int Aplayer1Chance;
+    public  int Aplayer1Level;
+    public  int Aplayer1TotStats;
+    public  int Aplayer1ClassID;
 
 
     // Joueur 1 nom et classe  :
@@ -47,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
     // --- JOUEUR 2 ---
 
-    public static String Aplayer2Name;
-    public static int Aplayer2Str;
-    public static int Aplayer2Int;
-    public static int Aplayer2Agi;
-    public static int Aplayer2Chance;
-    public static int Aplayer2Level;
-    public static int Aplayer2TotStats;
-    public static int Aplayer2ClassID;
+    public  String Aplayer2Name;
+    public  int Aplayer2Str;
+    public  int Aplayer2Int;
+    public  int Aplayer2Agi;
+    public  int Aplayer2Chance;
+    public  int Aplayer2Level;
+    public  int Aplayer2TotStats;
+    public  int Aplayer2ClassID;
 
 
     // Joueur 1 nom et classe  :
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"La somme des caractèristiques d'un joueur ne peut pas dépasser son niveau ! ",Toast.LENGTH_LONG).show();
                     P2TestButton.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.red));
                 } else {
-                    P1TestButton.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.green));
+                    P2TestButton.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.green));
 
 
                 }
@@ -217,5 +219,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public void StartFightActivity(View view) {
+        Log.d(LOG_TAG, "Button play clicked ! ");
+        Intent intent = new Intent(this, FightActivity.class);
+        intent.putExtra("Player1Name", Aplayer1Name);
+        intent.putExtra("Player1ClassID", Aplayer1ClassID);
+        intent.putExtra("Player1Level", Aplayer1Level);
+        intent.putExtra("Player1Strength", Aplayer1Str);
+        intent.putExtra("Player1Agility", Aplayer1Agi);
+        intent.putExtra("Player1Intel", Aplayer1Int);
+        intent.putExtra("Player1Chance", Aplayer1Chance);
+
+        intent.putExtra("Player2Name", Aplayer2Name);
+        intent.putExtra("Player2ClassID", Aplayer2ClassID);
+        intent.putExtra("Player2Level", Aplayer2Level);
+        intent.putExtra("Player2Strength", Aplayer2Str);
+        intent.putExtra("Player2Agility", Aplayer2Agi);
+        intent.putExtra("Player2Intel", Aplayer2Int);
+        intent.putExtra("Player2Chance", Aplayer2Chance);
+        startActivity(intent);
+
     }
 }
