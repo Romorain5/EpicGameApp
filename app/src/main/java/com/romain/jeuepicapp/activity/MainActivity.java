@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,12 +18,22 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.romain.jeuepicapp.R;
 
-public class MainActivity extends AppCompatActivity {
+import com.romain.jeuepicapp.Character;
+import com.romain.jeuepicapp.Marksman;
+import com.romain.jeuepicapp.R;
+import com.romain.jeuepicapp.Warrior;
+import com.romain.jeuepicapp.Wizard;
+
+// TODO deux activité, une pour chaque création de joueur
+
+public class MainActivity extends AppCompatActivity{
 
     public static final  String LOG_TAG =
             MainActivity.class.getSimpleName();
+    public static final String EXTRA_ID = "Player1ClassID";
+
+
     private Button PlayButton;
 
     // --- JOUEUR 1 ---
@@ -71,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
     private Button P2TestButton;
 
     // --- JOUEUR 1 GETTER ---
+
+
+
 
 
 
@@ -205,16 +220,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkButton2(View v) {
-        int radioId = P2Class.getCheckedRadioButtonId();
-        switch (radioId) {
-            case R.id.class_choice_warrior:
+        int radioId2 = P2Class.getCheckedRadioButtonId();
+        switch (radioId2) {
+            case R.id.class_choice_warrior2:
                 Aplayer2ClassID = 1;
+                Log.d("Fight", "checkButton2: maintenant la classID du joueur 2 est : " + Aplayer2ClassID);
                 break;
-            case R.id.class_choice_wizard:
+            case R.id.class_choice_wizard2:
                 Aplayer2ClassID = 2;
+                Log.d("Fight", "checkButton2: maintenant la classID du joueur 2 est : " + Aplayer2ClassID);
+
                 break;
-            case R.id.class_choice_marksman:
+            case R.id.class_choice_marksman2:
                 Aplayer2ClassID = 3;
+                Log.d("Fight", "checkButton2: maintenant la classID du joueur 2 est : " + Aplayer2ClassID);
+
                 break;
 
 
@@ -225,21 +245,80 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Button play clicked ! ");
         Intent intent = new Intent(this, FightActivity.class);
         intent.putExtra("Player1Name", Aplayer1Name);
-        intent.putExtra("Player1ClassID", Aplayer1ClassID);
-        intent.putExtra("Player1Level", Aplayer1Level);
-        intent.putExtra("Player1Strength", Aplayer1Str);
-        intent.putExtra("Player1Agility", Aplayer1Agi);
-        intent.putExtra("Player1Intel", Aplayer1Int);
-        intent.putExtra("Player1Chance", Aplayer1Chance);
+        if (Aplayer1ClassID == 1) {
 
-        intent.putExtra("Player2Name", Aplayer2Name);
-        intent.putExtra("Player2ClassID", Aplayer2ClassID);
-        intent.putExtra("Player2Level", Aplayer2Level);
-        intent.putExtra("Player2Strength", Aplayer2Str);
-        intent.putExtra("Player2Agility", Aplayer2Agi);
-        intent.putExtra("Player2Intel", Aplayer2Int);
-        intent.putExtra("Player2Chance", Aplayer2Chance);
+            Log.d("Fight", "StartFightActivity: joueur 1 est un guerrier :)");
+            intent.putExtra("Player1", new Warrior(Aplayer1Level, Aplayer1Str, Aplayer1Agi, Aplayer1Int, 0, Aplayer1Chance));
+
+        } else if (Aplayer1ClassID == 2 ) {
+
+            Log.d("Fight", "StartFightActivity: joueur 1 est un Mage :)");
+            intent.putExtra("Player1", new Wizard(Aplayer1Level, Aplayer1Str, Aplayer1Agi, Aplayer1Int, 0, Aplayer1Chance));
+
+        } else if (Aplayer1ClassID == 3 ) {
+
+            Log.d("Fight", "StartFightActivity: joueur 1 est un ROdeur :)");
+            intent.putExtra("Player1", new Marksman(Aplayer1Level, Aplayer1Str, Aplayer1Agi, Aplayer1Int, 0, Aplayer1Chance));
+
+        }
+        Log.d("Fight", "StartFightActivity: l'id de classe du joueur 2 est : " + Aplayer2ClassID);
+        if (Aplayer2ClassID == 1) {
+
+            Log.d("Fight", "StartFightActivity: joueur 2 est un guerrier :)");
+            intent.putExtra("Player2", new Warrior(Aplayer2Level, Aplayer2Str, Aplayer2Agi, Aplayer2Int, 0, Aplayer2Chance));
+        } else if (Aplayer2ClassID == 2 ) {
+
+            Log.d("Fight", "StartFightActivity: joueur 2 est un MAge :) :)");
+            intent.putExtra("Player2", new Wizard(Aplayer2Level, Aplayer2Str, Aplayer2Agi, Aplayer2Int, 0, Aplayer2Chance));
+        } else if (Aplayer2ClassID == 3 ) {
+
+            Log.d("Fight", "StartFightActivity: joueur 2 est un Rodeur :)");
+            intent.putExtra("Player2", new Marksman(Aplayer2Level, Aplayer2Str, Aplayer2Agi, Aplayer2Int, 0, Aplayer2Chance));
+        }
+
+        //   Character player1 = CreateCaracters(1,
+     //           Aplayer1ClassID,
+     //           Aplayer1Level,
+     //           Aplayer1Str,
+     //           Aplayer1Agi,
+     //           Aplayer1Int,
+     //           Aplayer1Chance);
+
+
+    //    Character player2 = CreateCaracters(2,
+    //            Aplayer2ClassID,
+    //            Aplayer2Level,
+    //            Aplayer2Str,
+    //            Aplayer2Agi,
+    //            Aplayer2Int,
+    //            Aplayer2Chance);
+    //
+
+
         startActivity(intent);
 
     }
+
+ ////  public static Character CreateCaracters(int pID, int cla, int lvl, int strg, int agi, int inte, int chance){
+
+ ////      Log.d("Fight", "CreateCaracters: Aplayer id = " + pID);
+
+ ////      switch (cla) {
+ ////          case 1:
+ ////              Log.d("Fight", "CreateCaracters: entered warrior creation condition");
+ ////              return new Warrior(lvl, strg, agi, inte, pID, chance);
+ ////          case 2:
+ ////              Log.d("Fight", "CreateCaracters: entered Marksman creation condition");
+ ////              return new Marksman(lvl, strg, agi, inte, pID, chance);
+ ////          case 3:
+ ////              Log.d("Fight", "CreateCaracters: entered Wizard creation condition");
+ ////              return new Wizard(lvl, strg, agi, inte, pID, chance);
+ ////          default:
+ ////              Log.d("Fight", "CreateCaracters: entered null :/ ");
+ ////              return null;
+ ////      }
+
+
+
+ ////  }
 }

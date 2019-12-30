@@ -1,14 +1,46 @@
 package com.romain.jeuepicapp;
 
-public class Warrior extends Character {
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
+public class Warrior extends Character implements Parcelable {
     public Warrior(int level, int strength, int agility, int intelligence, int number, int luck) {
         super(level, strength, agility, intelligence, number, luck);
     }
 
+    protected Warrior(Parcel in) {
+        super(in);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Warrior> CREATOR = new Creator<Warrior>() {
+        @Override
+        public Warrior createFromParcel(Parcel in) {
+            return new Warrior(in);
+        }
+
+        @Override
+        public Warrior[] newArray(int size) {
+            return new Warrior[size];
+        }
+    };
+
     @Override
     public void basicAttack(Character enemy) {
         if (!isCritical()) {
+            Log.d("Fight", "basicAttack:  entered in warrior basic attack" );
             int damage = this.getStrength();
+            Log.d("Fight", "basicAttack: la force est égal à " + this.getStrength() + " donc les degats subits seront de : " + damage);
             enemy.setHealth(enemy.getHealth()-damage);
 
 

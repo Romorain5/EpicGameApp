@@ -1,9 +1,12 @@
 package com.romain.jeuepicapp;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Character {
+public abstract class Character implements Parcelable {
 
     private int level;
     private int health;
@@ -23,6 +26,34 @@ public abstract class Character {
         this.number = number;
         this.luck = luck;
     }
+
+    public Character(Parcel in) {
+        level = in.readInt();
+        health = in.readInt();
+        strength = in.readInt();
+        agility = in.readInt();
+        intelligence = in.readInt();
+        number = in.readInt();
+        luck = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(level);
+        dest.writeInt(health);
+        dest.writeInt(strength);
+        dest.writeInt(agility);
+        dest.writeInt(intelligence);
+        dest.writeInt(number);
+        dest.writeInt(luck);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
 
     public abstract void basicAttack(Character enemy);
     public abstract void specialAttack(Character enemy);

@@ -2,7 +2,6 @@ package com.romain.jeuepicapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,23 +10,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.romain.jeuepicapp.Character;
-import com.romain.jeuepicapp.Marksman;
 import com.romain.jeuepicapp.R;
-import com.romain.jeuepicapp.Warrior;
-import com.romain.jeuepicapp.Wizard;
+
+// TODO Intent les characters directement depuis le MainActivity ( parcelable )
+
+// TODO Essayer d'utiliser les même bouton pour le controle des tours
+
+// TODO Recycler view pour faire un historique de se qu'il se passe ( regarder le TP du TopQuiz )
+
 
 public class FightActivity extends AppCompatActivity {
 
     public static final  String LOG_TAG =
             FightActivity.class.getSimpleName();
-
+    private TextView InfoPlayerTurns;
     private TextView hpP1;
     private TextView hpP2;
-    public static Character Ajoueur1 = null;
-    public static Character Ajoueur2 = null;
+    public Character mJoueur1 = null;
+    public Character mJoueur2 = null;
     public static boolean isPlayer1Turn = true;
-    private LinearLayout Player1Control;
-    private LinearLayout Player2Control;
+
 
 
 
@@ -37,41 +39,30 @@ public class FightActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fight);
 
         Log.d(LOG_TAG, "onCreate: Fight Activity executed successfully ");
-        //Intent intent = getIntent();
-        Bundle extras = getIntent().getExtras();
-        // int classeP1;
-        // classeP1 = extras.getInt("PlayerClassID");
-         Ajoueur1 = CreateCaracters (
-                1,
-                extras.getInt("Player1ClassID"),
-                extras.getInt("Player1Level"),
-                extras.getInt("Player1Strength"),
-                extras.getInt("Player1Agility"),
-                extras.getInt("Player1Intel"),
-                extras.getInt("Player1Chance"));
+        Bundle data = getIntent().getExtras();
+        mJoueur1 = data.getParcelable("Player1");
+        mJoueur2 = data.getParcelable("Player2");
+      // mJoueur1 = data.getExtras().getParcelable("Player1");
+      // mJoueur2 = data.getExtras().getParcelable("Player2");
+       // Toast.makeText(this,"Du coup la force du joueur 1 est : " + mJoueur1.getStrength(), Toast.LENGTH_LONG).show();
+        Log.d("Fight", "onCreate: la force du joueur 1 est :  " + mJoueur1.getStrength());
 
 
-        Ajoueur2 = CreateCaracters (
-                2,
-                extras.getInt("Player2ClassID"),
-                extras.getInt("Player2Level"),
-                extras.getInt("Player2Strength"),
-                extras.getInt("Player2Agility"),
-                extras.getInt("Player2Intel"),
-                extras.getInt("Player2Chance"));
-
-        Player1Control = findViewById(R.id.linear_layout_control_p1);
-        Player2Control = findViewById(R.id.linear_layout_control_p2);
+        InfoPlayerTurns = findViewById(R.id.info_player_turns);
         hpP1 = findViewById(R.id.figth_activity_p1_hp);
         hpP2 = findViewById(R.id.figth_activity_p2_hp);
 
-        hpP1.setText(Integer.toString(Ajoueur1.getHealth()));
-        hpP2.setText(Integer.toString(Ajoueur2.getHealth()));
+        hpP1.setText(Integer.toString(mJoueur1.getHealth()));
+        hpP2.setText(Integer.toString(mJoueur2.getHealth()));
+        Log.d("Fight", "onCreate: le niveau du joueur 1 est " + mJoueur1.getLevel() + " et donc ses point de vie sont de : " + mJoueur1.getHealth());
+        Log.d("Fight", "onCreate: le niveau du joueur 2 est " + mJoueur2.getLevel() + " et donc ses point de vie sont de : " + mJoueur2.getHealth());
 
-        if (Ajoueur1.getIntelligence() < Ajoueur2.getIntelligence()) {
-            Player1Control.setVisibility(View.VISIBLE);
+        if (mJoueur1.getIntelligence() > mJoueur2.getIntelligence()) {
+            isPlayer1Turn = true;
+            InfoPlayerTurns.setText("Joueur 1, à toi !");
         } else {
-            Player2Control.setVisibility(View.VISIBLE);
+            isPlayer1Turn = false;
+            InfoPlayerTurns.setText("Joueur 2, à toi !");
         }
 
 
@@ -81,65 +72,58 @@ public class FightActivity extends AppCompatActivity {
 
 
 
-    public static Character CreateCaracters(int pID, int cla, int lvl, int strg, int agi, int inte, int chance){
 
-
-
-        if (cla == 1) {
-            return new Warrior(lvl, strg, agi, inte, pID, chance);
-        } else if (cla == 2) {
-            return new Marksman(lvl, strg, agi, inte, pID, chance);
-        } else {
-            return new Wizard(lvl, strg, agi, inte, pID, chance);
-        }
-    }
 
     public void isSomeoneDead(){
-        if (Ajoueur1.getHealth() <= 0) {
-            Player1Control.setVisibility(View.INVISIBLE);
-            Player2Control.setVisibility(View.INVISIBLE);
-            Toast.makeText(this, "Le joueur 1 est mort ! Le joueur 2 a gagné !", Toast.LENGTH_LONG);
-        } else if (Ajoueur2.getHealth() <= 0 ) {
-            Player1Control.setVisibility(View.INVISIBLE);
-            Player2Control.setVisibility(View.INVISIBLE);
-            Toast.makeText(this, "Le joueur 2 est mort ! Le joueur 1 a gagné !", Toast.LENGTH_LONG);
+        if (mJoueur1.getHealth() <= 0) {
+
+            Toast.makeText(this, "Le joueur 1 est mort ! Le joueur 2 a gagné !", Toast.LENGTH_LONG).show();
+        } else if (mJoueur2.getHealth() <= 0 ) {
+
+            Toast.makeText(this, "Le joueur 2 est mort ! Le joueur 1 a gagné !", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    public void P1_basic_attack_to_P2(View view) {
-        Log.d(LOG_TAG, "P1_basic_attack_to_P2:  entered method");
-        Ajoueur1.basicAttack(Ajoueur2);
-        Log.d(LOG_TAG, "P1_basic_attack_to_P2:  executed joueur1.basicAttack");
-        hpP2.setText(Integer.toString(Ajoueur2.getHealth())); // refresh player 2 health
-        Player1Control.setVisibility(View.INVISIBLE);
-        Player2Control.setVisibility(View.VISIBLE);
-        isSomeoneDead();
+    public void BA_p1_to_p2() {
+        mJoueur1.basicAttack(mJoueur2);
+        isPlayer1Turn = false;
+        InfoPlayerTurns.setText(R.string.J2_turn);
+        hpP2.setText(mJoueur2.getHealth());
     }
 
-    public void P1_special_attack_to_P2(View view) {
-        Ajoueur1.specialAttack(Ajoueur2);
-        hpP1.setText(Integer.toString(Ajoueur1.getHealth()));
-        hpP2.setText(Integer.toString(Ajoueur2.getHealth()));
-        Player1Control.setVisibility(View.INVISIBLE);
-        Player2Control.setVisibility(View.VISIBLE);
-        isSomeoneDead();
+    public void BA_p2_to_p1() {
+        mJoueur2.basicAttack(mJoueur1);
+        isPlayer1Turn = true;
+        InfoPlayerTurns.setText(R.string.J1_turn);
+        hpP1.setText(mJoueur1.getHealth());
     }
 
-    public void P2_basic_attack_to_P1(View view) {
-        Ajoueur2.basicAttack(Ajoueur1);
-        hpP1.setText(Integer.toString(Ajoueur1.getHealth())); // refresh player 1 health
-        Player2Control.setVisibility(View.INVISIBLE);
-        Player1Control.setVisibility(View.VISIBLE);
-        isSomeoneDead();
+
+
+    public void Basic_attack(View view) {
+        if (isPlayer1Turn) {
+            BA_p1_to_p2();
+        } else {
+            BA_p2_to_p1();
+        }
     }
 
-    public void P2_special_attack_to_P1(View view) {
-        Ajoueur2.specialAttack(Ajoueur1);
-        hpP1.setText(Integer.toString(Ajoueur1.getHealth()));
-        hpP2.setText(Integer.toString(Ajoueur2.getHealth()));
-        Player2Control.setVisibility(View.INVISIBLE);
-        Player1Control.setVisibility(View.VISIBLE);
-        isSomeoneDead();
+    public void Special_attack(View view) {
+        if (isPlayer1Turn) {
+            mJoueur1.specialAttack(mJoueur2);
+            isPlayer1Turn = false;
+            InfoPlayerTurns.setText(R.string.J2_turn);
+            hpP1.setText(mJoueur1.getHealth());
+            hpP2.setText(mJoueur2.getHealth());
+        } else {
+            mJoueur2.specialAttack(mJoueur1);
+            isPlayer1Turn = true;
+            InfoPlayerTurns.setText(R.string.J1_turn);
+
+            hpP1.setText(mJoueur1.getHealth());
+            hpP2.setText(mJoueur2.getHealth());
+
+        }
     }
 }

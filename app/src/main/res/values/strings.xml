@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JeuEpicApp</string>
+    <string name="J2_turn">Joueur 2, à toi !</string>
+    <string name="J1_turn">Joueur 1, à toi !</string>
 </resources>
