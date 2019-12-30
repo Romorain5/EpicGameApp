@@ -15,7 +15,11 @@ public class Warrior extends Character implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
+        dest.writeInt(getLevel());
+        dest.writeInt(getStrength());
+        dest.writeInt(getAgility());
+        dest.writeInt(getIntelligence());
+        dest.writeInt(getLuck());
     }
 
     @Override

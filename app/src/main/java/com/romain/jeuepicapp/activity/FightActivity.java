@@ -86,9 +86,13 @@ public class FightActivity extends AppCompatActivity {
     }
 
     public void BA_p1_to_p2() {
+        Log.d("Fight", "BA_p1_to_p2: Clique du bouton attaque basique");
         mJoueur1.basicAttack(mJoueur2);
+        Log.d("Fight", "BA_p1_to_p2: temoins apres l'attaque ");
         isPlayer1Turn = false;
         InfoPlayerTurns.setText(R.string.J2_turn);
+        Log.d("Fight", "BA_p1_to_p2: temoins apres changement de text - au tour du joueur 2 ");
+        Log.d("Fight", "BA_p1_to_p2: Et apres réactualisation de l'affichage des point de vie du joueur 2.");
         hpP2.setText(mJoueur2.getHealth());
     }
 
