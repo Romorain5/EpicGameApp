@@ -1,10 +1,8 @@
 package com.romain.jeuepicapp;
 
-import android.annotation.SuppressLint;
 import android.os.Parcel;
-import android.os.Parcelable;
 
-public class  Marksman extends Character implements Parcelable {
+public class  Marksman extends Character {
 
 
     public Marksman(int level, int strength, int agility, int intelligence, int number, int luck) {
@@ -16,15 +14,6 @@ public class  Marksman extends Character implements Parcelable {
         super(in);
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public static final Creator<Marksman> CREATOR = new Creator<Marksman>() {
         @Override
@@ -66,6 +55,7 @@ public class  Marksman extends Character implements Parcelable {
     public void getClasse() {
 
     }
+
 
 
 }

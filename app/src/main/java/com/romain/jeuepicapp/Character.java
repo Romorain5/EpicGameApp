@@ -83,7 +83,7 @@ public abstract class Character implements Parcelable {
     }
 
 
-    public int getHealth() {
+    public Integer getHealth() {
         return health;
     }
 

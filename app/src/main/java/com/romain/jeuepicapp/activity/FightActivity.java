@@ -56,7 +56,7 @@ public class FightActivity extends AppCompatActivity {
         hpP2.setText(Integer.toString(mJoueur2.getHealth()));
         Log.d("Fight", "onCreate: le niveau du joueur 1 est " + mJoueur1.getLevel() + " et donc ses point de vie sont de : " + mJoueur1.getHealth());
         Log.d("Fight", "onCreate: le niveau du joueur 2 est " + mJoueur2.getLevel() + " et donc ses point de vie sont de : " + mJoueur2.getHealth());
-
+        Log.d("Fight", "onCreate: l'id de classe du joueur 1 est: ");
         if (mJoueur1.getIntelligence() > mJoueur2.getIntelligence()) {
             isPlayer1Turn = true;
             InfoPlayerTurns.setText("Joueur 1, à toi !");
@@ -93,23 +93,24 @@ public class FightActivity extends AppCompatActivity {
         InfoPlayerTurns.setText(R.string.J2_turn);
         Log.d("Fight", "BA_p1_to_p2: temoins apres changement de text - au tour du joueur 2 ");
         Log.d("Fight", "BA_p1_to_p2: Et apres réactualisation de l'affichage des point de vie du joueur 2.");
-        hpP2.setText(mJoueur2.getHealth());
-    }
-
-    public void BA_p2_to_p1() {
-        mJoueur2.basicAttack(mJoueur1);
-        isPlayer1Turn = true;
-        InfoPlayerTurns.setText(R.string.J1_turn);
-        hpP1.setText(mJoueur1.getHealth());
+        hpP2.setText(mJoueur2.getHealth().toString());
     }
 
 
 
     public void Basic_attack(View view) {
         if (isPlayer1Turn) {
-            BA_p1_to_p2();
+            mJoueur1.basicAttack(mJoueur2);
+            isPlayer1Turn = false;
+            InfoPlayerTurns.setText("Joueur 2 à toi !");
+            Log.d("Fight", "Basic_attack: ici le joueur 1 est censé attaquer le joueur 2 et lui ramener ses pv à :" + mJoueur2.getHealth().toString());
+            hpP2.setText(mJoueur2.getHealth().toString());
+
         } else {
-            BA_p2_to_p1();
+            mJoueur2.basicAttack(mJoueur1);
+            isPlayer1Turn = true;
+            InfoPlayerTurns.setText(R.string.J1_turn);
+            hpP1.setText(mJoueur1.getHealth().toString());
         }
     }
 
@@ -118,15 +119,15 @@ public class FightActivity extends AppCompatActivity {
             mJoueur1.specialAttack(mJoueur2);
             isPlayer1Turn = false;
             InfoPlayerTurns.setText(R.string.J2_turn);
-            hpP1.setText(mJoueur1.getHealth());
-            hpP2.setText(mJoueur2.getHealth());
+            hpP1.setText(mJoueur1.getHealth().toString());
+            hpP2.setText(mJoueur2.getHealth().toString());
         } else {
             mJoueur2.specialAttack(mJoueur1);
             isPlayer1Turn = true;
             InfoPlayerTurns.setText(R.string.J1_turn);
 
-            hpP1.setText(mJoueur1.getHealth());
-            hpP2.setText(mJoueur2.getHealth());
+            hpP1.setText(mJoueur1.getHealth().toString());
+            hpP2.setText(mJoueur2.getHealth().toString());
 
         }
     }

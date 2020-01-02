@@ -4,27 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-public class Warrior extends Character implements Parcelable {
+public class Warrior extends Character {
     public Warrior(int level, int strength, int agility, int intelligence, int number, int luck) {
         super(level, strength, agility, intelligence, number, luck);
     }
 
     protected Warrior(Parcel in) {
         super(in);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(getLevel());
-        dest.writeInt(getStrength());
-        dest.writeInt(getAgility());
-        dest.writeInt(getIntelligence());
-        dest.writeInt(getLuck());
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<Warrior> CREATOR = new Creator<Warrior>() {

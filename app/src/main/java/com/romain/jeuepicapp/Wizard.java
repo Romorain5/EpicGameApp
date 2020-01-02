@@ -2,8 +2,9 @@ package com.romain.jeuepicapp;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-public class Wizard  extends Character implements Parcelable {
+public class Wizard  extends Character {
 
 
     public Wizard(int level, int strength, int agility, int intelligence, int number, int luck) {
@@ -14,15 +15,6 @@ public class Wizard  extends Character implements Parcelable {
         super(in);
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public static final Creator<Wizard> CREATOR = new Creator<Wizard>() {
         @Override
@@ -38,12 +30,17 @@ public class Wizard  extends Character implements Parcelable {
 
     @Override
     public void basicAttack(Character enemy) {
+
+        Log.d("Fight", "basicAttack: entree dans basic attack du mage avant le IF");
         if (!isCritical()) {
+            Log.d("Fight", "basicAttack: entree dans basic attack du mage dans si pas de CC");
             int damage = this.getIntelligence();
+            Log.d("Fight", "basicAttack: entree dans basic attack et les dmg seront de : " + damage);
             enemy.setHealth(enemy.getHealth()-damage);
 
 
         } else {
+            Log.d("Fight", "basicAttack: entree dans basic attack du mage dans si il y a CC");
             int damage = this.getIntelligence() * 3;
             enemy.setHealth(enemy.getHealth()-damage);
 
@@ -58,13 +55,11 @@ public class Wizard  extends Character implements Parcelable {
 
     @Override
     public void specialAttack(Character enemy) {
-        int maxHealth = 5 * this.getHealth();
+        int maxHealth = 5 * this.getLevel();
         int heal = (this.getIntelligence() ) * 2;
         this.setHealth(this.getHealth() + heal);
         if (this.getHealth() >= maxHealth ) {
             this.setHealth( maxHealth );
-
-        } else {
 
         }
     }

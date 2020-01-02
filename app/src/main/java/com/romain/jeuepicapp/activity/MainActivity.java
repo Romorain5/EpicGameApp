@@ -4,19 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.provider.Settings;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.romain.jeuepicapp.Character;
@@ -158,7 +151,7 @@ public class MainActivity extends AppCompatActivity{
 
     public void GotoPlayer2Creation(View view) {
         Intent intent = new Intent(this, FightActivity.class);
-        Intent intentToP2Creation = new Intent(this, Player2Creation.class);
+        Intent intentToP2Creation = new Intent(this, PlayerCreation.class);
         Log.d(LOG_TAG, "Button next clicked ! ");
 
 
@@ -169,7 +162,7 @@ public class MainActivity extends AppCompatActivity{
             Aplayer1Agi,
             Aplayer1Int,
             Aplayer1Chance);
-        intent.putExtra("Player1", player1);
+        intentToP2Creation.putExtra("Player1", player1);
         startActivity(intentToP2Creation);
     }
 
@@ -180,11 +173,11 @@ public class MainActivity extends AppCompatActivity{
                 Log.d("Fight", "CreateCaracters: entered warrior creation condition");
                 return new Warrior(lvl, strg, agi, inte, pID, chance);
             case 2:
-                Log.d("Fight", "CreateCaracters: entered Marksman creation condition");
-                return new Marksman(lvl, strg, agi, inte, pID, chance);
-            case 3:
                 Log.d("Fight", "CreateCaracters: entered Wizard creation condition");
                 return new Wizard(lvl, strg, agi, inte, pID, chance);
+            case 3:
+                Log.d("Fight", "CreateCaracters: entered Marksman creation condition");
+                return new Marksman(lvl, strg, agi, inte, pID, chance);
             default:
                 Log.d("Fight", "CreateCaracters: entered null :/ ");
                 return null;
