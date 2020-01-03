@@ -30,6 +30,8 @@ public class FightActivity extends AppCompatActivity {
     public Character mJoueur2 = null;
     public static boolean isPlayer1Turn = true;
 
+    public static final String EXTRA_PLAYER1 = "Player1";
+    public static final String EXTRA_PLAYER2 = "Player2";
 
 
 
@@ -40,11 +42,10 @@ public class FightActivity extends AppCompatActivity {
 
         Log.d(LOG_TAG, "onCreate: Fight Activity executed successfully ");
         Bundle data = getIntent().getExtras();
-        mJoueur1 = data.getParcelable("Player1");
-        mJoueur2 = data.getParcelable("Player2");
-      // mJoueur1 = data.getExtras().getParcelable("Player1");
-      // mJoueur2 = data.getExtras().getParcelable("Player2");
-       // Toast.makeText(this,"Du coup la force du joueur 1 est : " + mJoueur1.getStrength(), Toast.LENGTH_LONG).show();
+        if (data != null) {
+            mJoueur1 = data.getParcelable(EXTRA_PLAYER1);
+        }
+        mJoueur2 = data.getParcelable(EXTRA_PLAYER2);
         Log.d("Fight", "onCreate: la force du joueur 1 est :  " + mJoueur1.getStrength());
 
 

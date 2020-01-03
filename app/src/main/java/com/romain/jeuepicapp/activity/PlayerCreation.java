@@ -123,34 +123,44 @@ public class PlayerCreation extends AppCompatActivity {
     public void createCharacter(View view) {
 
         Intent intentToP1Creation = getIntent();
-        int playerID = intentToP1Creation.getExtras().getInt("Player");
+        int playerID = intentToP1Creation.getExtras().getInt(MainActivity.EXTRA_PLAYER_ID);
 
         //Intent intentb = new Intent(this, FightActivity.class);
         Intent replyIntent = new Intent();
-        if (playerID == 1) {
-            Character player1 = CreateCaracters(1,
-                    aplayer2ClassID,
-                    aplayer2Level,
-                    aplayer2Str,
-                    aplayer2Agi,
-                    aplayer2Int,
-                    aplayer2Chance);
-            replyIntent.putExtra("Player11", player1);
-            setResult(RESULT_OK,replyIntent);
-            finish();
-
-        } else if (playerID == 2) {
-            Character player2 = CreateCaracters(1,
-                    aplayer2ClassID,
-                    aplayer2Level,
-                    aplayer2Str,
-                    aplayer2Agi,
-                    aplayer2Int,
-                    aplayer2Chance);
-            replyIntent.putExtra("Player22", player2);
-            setResult(RESULT_OK,replyIntent);
-            finish();
-        }
+        Character player1 = CreateCaracters(playerID,
+                aplayer2ClassID,
+                aplayer2Level,
+                aplayer2Str,
+                aplayer2Agi,
+                aplayer2Int,
+                aplayer2Chance);
+        replyIntent.putExtra(MainActivity.EXTRA_PLAYER_ID, player1);
+        setResult(RESULT_OK,replyIntent);
+        finish();
+     //   if (playerID == 1) {
+     //       Character player1 = CreateCaracters(1,
+     //               aplayer2ClassID,
+     //               aplayer2Level,
+     //               aplayer2Str,
+     //               aplayer2Agi,
+     //               aplayer2Int,
+     //               aplayer2Chance);
+     //       replyIntent.putExtra("Player11", player1);
+     //       setResult(RESULT_OK,replyIntent);
+     //       finish();
+//
+     //   } else if (playerID == 2) {
+     //       Character player2 = CreateCaracters(1,
+     //               aplayer2ClassID,
+     //               aplayer2Level,
+     //               aplayer2Str,
+     //               aplayer2Agi,
+     //               aplayer2Int,
+     //               aplayer2Chance);
+     //       replyIntent.putExtra("Player22", player2);
+     //       setResult(RESULT_OK,replyIntent);
+     //       finish();
+     //   }
 
 
 

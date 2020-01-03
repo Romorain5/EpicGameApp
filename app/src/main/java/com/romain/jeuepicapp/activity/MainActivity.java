@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity{
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    public static final String EXTRA_PLAYER_ID = "PLAYER1";
+    public static final String EXTRA_PLAYER_ID = "PLAYER";
     public static final int PLAYER_CREATION_REQUEST = 1;
     public static final int PLAYER_CREATION_REQUEST2 = 2;
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity{
         Intent intentToP1Creation = new Intent(this, PlayerCreation.class);
 
         Log.d(LOG_TAG, "Button player1Creation clicked ! ");
-        intentToP1Creation.putExtra("Player", playerIDCheck);
+        intentToP1Creation.putExtra(EXTRA_PLAYER_ID, playerIDCheck);
 
 
 
@@ -74,50 +75,43 @@ public class MainActivity extends AppCompatActivity{
         playerIDCheck = 2;
         Intent intentToP1Creation = new Intent(this,PlayerCreation.class);
         Log.d(LOG_TAG, "gotoPlayer2Creation: Button clicked ! ");
-        intentToP1Creation.putExtra("Player",playerIDCheck);
+        intentToP1Creation.putExtra(EXTRA_PLAYER_ID,playerIDCheck);
 
-        startActivityForResult(intentToP1Creation, PLAYER_CREATION_REQUEST2);
+        startActivityForResult(intentToP1Creation, PLAYER_CREATION_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1: if (resultCode == RESULT_OK) {
+        if (requestCode == PLAYER_CREATION_REQUEST && resultCode == Activity.RESULT_OK) {
+            if (playerIDCheck == 1) {
                 Log.d(LOG_TAG, "onActivityResult: back ok :), joueur 1 créé !  ");
                 CreatePlayer1Button.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.green));
 
 
-                if (data != null) {
-                    joueur1 = data.getParcelableExtra("Player11");
-                }
+
+                joueur1 = data.getParcelableExtra(EXTRA_PLAYER_ID);
 
 
-            } else if (resultCode == RESULT_CANCELED) {
-                Log.d(LOG_TAG, "onActivityResult: REsult canceled :/ ");
+
+
+            } else if (playerIDCheck == 2) {
+                Log.d(LOG_TAG, "onActivityResult: back ok :), jouer 2 créé !! ");
+                joueur2 = data.getParcelableExtra(EXTRA_PLAYER_ID);
+                CreatePlayer2Button.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.green));
+
             }
-            break;
 
-            case 2:
-                if (resultCode == RESULT_OK) {
-                    Log.d(LOG_TAG, "onActivityResult: back ok :), jouer 2 créé !! ");
-                    joueur2 = data.getParcelableExtra("Player22");
-                    CreatePlayer2Button.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.green));
-                } else if (requestCode == RESULT_CANCELED) {
-                    Log.d(LOG_TAG, "onActivityResult: REsult canceled :/ ");
-                }
-            break;
+
         }
-
-
 
     }
 
     public void startFight(View view) {
 
         Intent intent = new Intent(this, FightActivity.class);
-        intent.putExtra("Player1", joueur1);
-        intent.putExtra("Player2", joueur2);
+        intent.putExtra(FightActivity.EXTRA_PLAYER1, joueur1);
+        intent.putExtra(FightActivity.EXTRA_PLAYER2, joueur2);
 
         startActivity(intent);
 
