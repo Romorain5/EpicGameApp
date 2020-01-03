@@ -53,7 +53,7 @@ public class PlayerCreation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player2_creation);
+        setContentView(R.layout.activity_player_creation);
 
         p2Name = findViewById(R.id.input_player2_name);
         p2Class = findViewById(R.id.class_choice_group2);
@@ -120,20 +120,45 @@ public class PlayerCreation extends AppCompatActivity {
         }
     }
 
-    public void StartFightActivity(View view) {
-        Intent intentb = new Intent(this, FightActivity.class);
-        Character player2 = CreateCaracters(2,
-                aplayer2ClassID,
-                aplayer2Level,
-                aplayer2Str,
-                aplayer2Agi,
-                aplayer2Int,
-                aplayer2Chance);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            intentb.putExtra("Player1", Objects.requireNonNull(getIntent().getExtras()).getParcelable("Player1"));
+    public void createCharacter(View view) {
+
+        Intent intentToP1Creation = getIntent();
+        int playerID = intentToP1Creation.getExtras().getInt("Player");
+
+        //Intent intentb = new Intent(this, FightActivity.class);
+        Intent replyIntent = new Intent();
+        if (playerID == 1) {
+            Character player1 = CreateCaracters(1,
+                    aplayer2ClassID,
+                    aplayer2Level,
+                    aplayer2Str,
+                    aplayer2Agi,
+                    aplayer2Int,
+                    aplayer2Chance);
+            replyIntent.putExtra("Player11", player1);
+            setResult(RESULT_OK,replyIntent);
+            finish();
+
+        } else if (playerID == 2) {
+            Character player2 = CreateCaracters(1,
+                    aplayer2ClassID,
+                    aplayer2Level,
+                    aplayer2Str,
+                    aplayer2Agi,
+                    aplayer2Int,
+                    aplayer2Chance);
+            replyIntent.putExtra("Player22", player2);
+            setResult(RESULT_OK,replyIntent);
+            finish();
         }
-        intentb.putExtra("Player2", player2);
-        startActivity(intentb);
+
+
+
+
+        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        // intentb.putExtra("Player1", Objects.requireNonNull(getIntent().getExtras()).getParcelable("Player1"));
+        //}
+        //startActivity(intentb);
     }
 
     public static Character CreateCaracters(int pID, int cla, int lvl, int strg, int agi, int inte, int chance) {

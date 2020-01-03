@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear_layout_stats1"
         android:padding="15dp"
-        android:hint="Nom du joueur 2"
+        android:hint="Nom du joueur"
         />
 
     <RadioGroup
@@ -102,15 +102,15 @@
 
 
     <Button
-        android:id="@+id/activity_main_play_btn"
+        android:id="@+id/activity_main_create_player2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear_layout_stats2"
-        android:text="Commencer !"
+        android:text="Créer le personnage !"
         android:textSize="18dp"
         android:layout_centerHorizontal="true"
         android:padding="20dp"
         android:layout_marginTop="20dp"
-        android:onClick="StartFightActivity"/>
+        android:onClick="createCharacter"/>
 
 </RelativeLayout>
