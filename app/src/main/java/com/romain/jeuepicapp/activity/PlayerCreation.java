@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -55,6 +57,11 @@ public class PlayerCreation extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     int currentVideoPosition;
 
+    private ImageView warrior;
+    private ImageView wizard;
+    private ImageView marksman;
+
+
 
 
 
@@ -65,8 +72,10 @@ public class PlayerCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_creation);
 
-        p2Name = findViewById(R.id.input_player2_name);
-        p2Class = findViewById(R.id.class_choice_group2);
+        warrior = findViewById(R.id.Warrior_choice_head);
+        wizard = findViewById(R.id.Wizard_choice_head);
+        marksman = findViewById(R.id.Marksman_choice_head);
+
 
         p2Level = findViewById(R.id.level_input2);
         p2Strength = findViewById(R.id.strength_input2);
@@ -129,27 +138,6 @@ public class PlayerCreation extends AppCompatActivity {
     }
 
 
-
-
-    public void checkButton2(View v) {
-        int radioId2 = p2Class.getCheckedRadioButtonId();
-        switch (radioId2) {
-            case R.id.class_choice_warrior2:
-                aplayer2ClassID = 1;
-                Log.d("Fight", "checkButton2: maintenant la classID du joueur 2 est : " + aplayer2ClassID);
-                break;
-            case R.id.class_choice_wizard2:
-                aplayer2ClassID = 2;
-                Log.d("Fight", "checkButton2: maintenant la classID du joueur 2 est : " + aplayer2ClassID);
-                break;
-            case R.id.class_choice_marksman2:
-                aplayer2ClassID = 3;
-                Log.d("Fight", "checkButton2: maintenant la classID du joueur 2 est : " + aplayer2ClassID);
-                break;
-
-        }
-    }
-
     public void createCharacter(View view) {
 
         Intent intentToP1Creation = getIntent();
@@ -167,38 +155,6 @@ public class PlayerCreation extends AppCompatActivity {
         replyIntent.putExtra(MainActivity.EXTRA_PLAYER_ID, player1);
         setResult(RESULT_OK,replyIntent);
         finish();
-     //   if (playerID == 1) {
-     //       Character player1 = CreateCaracters(1,
-     //               aplayer2ClassID,
-     //               aplayer2Level,
-     //               aplayer2Str,
-     //               aplayer2Agi,
-     //               aplayer2Int,
-     //               aplayer2Chance);
-     //       replyIntent.putExtra("Player11", player1);
-     //       setResult(RESULT_OK,replyIntent);
-     //       finish();
-//
-     //   } else if (playerID == 2) {
-     //       Character player2 = CreateCaracters(1,
-     //               aplayer2ClassID,
-     //               aplayer2Level,
-     //               aplayer2Str,
-     //               aplayer2Agi,
-     //               aplayer2Int,
-     //               aplayer2Chance);
-     //       replyIntent.putExtra("Player22", player2);
-     //       setResult(RESULT_OK,replyIntent);
-     //       finish();
-     //   }
-
-
-
-
-        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        // intentb.putExtra("Player1", Objects.requireNonNull(getIntent().getExtras()).getParcelable("Player1"));
-        //}
-        //startActivity(intentb);
     }
 
     public static Character CreateCaracters(int pID, int cla, int lvl, int strg, int agi, int inte, int chance) {
@@ -218,5 +174,28 @@ public class PlayerCreation extends AppCompatActivity {
         }
 
 
+    }
+
+    public void onWarriorClicked(View view) {
+        warrior.setColorFilter(Color.argb(100, 0, 200, 0));
+        wizard.setColorFilter(Color.argb(0, 0, 0, 0));
+        marksman.setColorFilter(Color.argb(0, 0, 0, 0));
+        aplayer2ClassID = 1;
+    }
+
+    public void onWizardClicked(View view) {
+
+        wizard.setColorFilter(Color.argb(100, 0, 200, 0));
+        warrior.setColorFilter(Color.argb(0, 0, 0, 0));
+        marksman.setColorFilter(Color.argb(0, 0, 0, 0));
+        aplayer2ClassID = 2;
+    }
+
+    public void onMarksmanClicked(View view) {
+
+        marksman.setColorFilter(Color.argb(100, 0, 200, 0));
+        wizard.setColorFilter(Color.argb(0, 0, 0, 0));
+        warrior.setColorFilter(Color.argb(0, 0, 0, 0));
+        aplayer2ClassID = 3;
     }
 }

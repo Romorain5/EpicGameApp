@@ -7,6 +7,17 @@
     tools:context=".activity.FightActivity"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/background_fightv2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitXY"
+        />
+
 
     <LinearLayout
     android:layout_width="wrap_content"
@@ -51,33 +62,54 @@
             android:text="Player 2 HP not defined :/"/>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_below="@+id/linear_layout_fight_p1"
+
+    <TextView
+        android:layout_below="@id/linear_layout_fight_p1"
+        android:layout_marginTop="150dp"
+        android:background="#63303030"
+        android:textSize="19dp"
+        android:textColor="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_marginTop="175dp"
+        android:id="@+id/info_player_turns"
+        android:layout_height="wrap_content"
+        android:text="Hello ! Player - turn"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/nunito_semibold"
+        />
+
+    <LinearLayout
+        android:layout_below="@+id/info_player_turns"
+        android:layout_width="match_parent"
+        android:gravity="center"
         android:orientation="horizontal"
         android:visibility="visible"
         android:layout_height="wrap_content"
-        android:id="@+id/linear_layout_control">
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/info_player_turns"
-            android:layout_height="wrap_content"
-            android:text="Hello ! Player - turn"/>
+        android:id="@+id/linear_layout_control"
+        >
+
 
         <Button
+            android:id="@+id/fight_basic_attack_p1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Basic attack"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/button_style"
+            android:fontFamily="@font/nunito_semibold"
             android:onClick="Basic_attack"
-            android:id="@+id/fight_basic_attack_p1"/>
+            android:padding="15dp"
+            android:text="Basic attack" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Special attack"
+            android:fontFamily="@font/nunito_semibold"
             android:onClick="Special_attack"
-            android:id="@+id/fight_special_attack_p1"/>
+            android:id="@+id/fight_special_attack_p1"
+            android:background="@drawable/button_style"
+            android:padding="15dp"/>
 
     </LinearLayout>
 
