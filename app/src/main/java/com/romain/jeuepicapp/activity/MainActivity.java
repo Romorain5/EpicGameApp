@@ -6,15 +6,22 @@ import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.VideoView;
 
 import com.romain.jeuepicapp.Character;
 import com.romain.jeuepicapp.R;
 
-// TODO deux activité, une pour chaque création de joueur
+import butterknife.BindView;
+
+
 
 public class MainActivity extends AppCompatActivity{
 
@@ -26,10 +33,11 @@ public class MainActivity extends AppCompatActivity{
 
     Character joueur1 = null;
     Character joueur2 = null;
-
+    VideoView videoViewo;
+    MediaPlayer mediaPlayer;
+    int currentVideoPosition;
 
     public int playerIDCheck;
-
 
     public static final String EXTRA_ID = "Player1ClassID";
 
@@ -37,27 +45,40 @@ public class MainActivity extends AppCompatActivity{
     private Button CreatePlayer2Button;
 
 
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         CreatePlayer1Button = findViewById(R.id.activity_main_create_player1);
         CreatePlayer2Button = findViewById(R.id.activity_main_create_player2);
 
+
+        // VIDEO BACKGROUND
+        videoViewo = findViewById(R.id.video_view);
+        Uri uri = Uri.parse("android.resource://"
+        + getPackageName()
+        +"/"
+        + R.raw.waterfall_background);
+        videoViewo.setVideoURI(uri);
+        videoViewo.start();
+
+        videoViewo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mediaPlayer = mp;
+                mediaPlayer.setLooping(true);
+                if (currentVideoPosition != 0) {
+                    mediaPlayer.seekTo(currentVideoPosition);
+                    mediaPlayer.start();
+                }
+            }
+        });
+
+
+
     }
-
-
-
-
-
-
-
     public void gotoPlayer1Creation(View view) {
         playerIDCheck = 1;
         Intent intentToP1Creation = new Intent(this, PlayerCreation.class);

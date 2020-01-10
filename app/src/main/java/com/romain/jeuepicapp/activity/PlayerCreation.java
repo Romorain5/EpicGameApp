@@ -4,14 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.romain.jeuepicapp.Character;
 import com.romain.jeuepicapp.Marksman;
@@ -47,11 +51,17 @@ public class PlayerCreation extends AppCompatActivity {
     private EditText p2Chance;
     private Button p2TestButton;
 
+    VideoView videoViewo;
+    MediaPlayer mediaPlayer;
+    int currentVideoPosition;
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_creation);
 
@@ -64,6 +74,26 @@ public class PlayerCreation extends AppCompatActivity {
         p2Agility = findViewById(R.id.agility_input2);
         p2Chance = findViewById(R.id.chance_input2);
         p2TestButton = findViewById(R.id.ok_test_stats_btn2);
+
+        videoViewo = findViewById(R.id.video_view);
+        Uri uri = Uri.parse("android.resource://"
+                + getPackageName()
+                +"/"
+                + R.raw.waterfall_background);
+        videoViewo.setVideoURI(uri);
+        videoViewo.start();
+
+        videoViewo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mediaPlayer = mp;
+                mediaPlayer.setLooping(true);
+                if (currentVideoPosition != 0) {
+                    mediaPlayer.seekTo(currentVideoPosition);
+                    mediaPlayer.start();
+                }
+            }
+        });
 
         p2TestButton.setOnClickListener(new View.OnClickListener() {
             @Override
