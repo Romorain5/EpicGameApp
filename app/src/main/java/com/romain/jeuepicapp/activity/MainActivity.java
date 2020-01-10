@@ -56,11 +56,20 @@ public class MainActivity extends AppCompatActivity{
 
 
         // VIDEO BACKGROUND
+
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         videoViewo = findViewById(R.id.video_view);
         Uri uri = Uri.parse("android.resource://"
-        + getPackageName()
-        +"/"
-        + R.raw.waterfall_background);
+                + getPackageName()
+                +"/"
+                + R.raw.waterfall_background);
         videoViewo.setVideoURI(uri);
         videoViewo.start();
 
@@ -76,9 +85,8 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-
-
     }
+
     public void gotoPlayer1Creation(View view) {
         playerIDCheck = 1;
         Intent intentToP1Creation = new Intent(this, PlayerCreation.class);

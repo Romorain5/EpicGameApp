@@ -19,7 +19,7 @@
         />
 
 
-    <LinearLayout
+    <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -39,7 +39,21 @@
         android:layout_height="wrap_content"
         android:text="Player 1 HP not defined :/ "
         android:layout_below="@+id/HP1"/>
-    </LinearLayout>
+
+        <ImageView
+            android:layout_below="@id/figth_activity_p1_hp"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:background="@android:color/holo_red_light"
+            />
+        <ImageView
+            android:id="@+id/hp_bar_to_decrease"
+            android:layout_below="@id/figth_activity_p1_hp"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:background="@android:color/holo_green_light"
+            />
+    </RelativeLayout>
 
     <LinearLayout
     android:layout_width="wrap_content"

@@ -76,6 +76,7 @@ public class PlayerCreation extends AppCompatActivity {
         wizard = findViewById(R.id.Wizard_choice_head);
         marksman = findViewById(R.id.Marksman_choice_head);
 
+        //p2Name = findViewById(R.id.input_player2_name);
 
         p2Level = findViewById(R.id.level_input2);
         p2Strength = findViewById(R.id.strength_input2);
@@ -107,7 +108,7 @@ public class PlayerCreation extends AppCompatActivity {
         p2TestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                aplayer2Name = p2Name.getText().toString(); //récupére le nom du joueur 1 et le stock dans Aplayer1Name
+                //aplayer2Name = p2Name.getText().toString(); //récupére le nom du joueur 1 et le stock dans Aplayer1Name
                 // Récupere et stock la force du joueur 1
                 String valueS = p2Strength.getText().toString();
                 aplayer2Str = Integer.parseInt(valueS);

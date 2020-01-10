@@ -2,10 +2,12 @@ package com.romain.jeuepicapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,8 @@ public class FightActivity extends AppCompatActivity {
     public Character mJoueur1 = null;
     public Character mJoueur2 = null;
     public static boolean isPlayer1Turn = true;
+   //public ClipDrawable mImageDrawable;
+   //public  ImageView clipHp1;
 
     public static final String EXTRA_PLAYER1 = "Player1";
     public static final String EXTRA_PLAYER2 = "Player2";
@@ -42,6 +46,13 @@ public class FightActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
+
+
+        //TEST CLIP HP BAR
+       // clipHp1 = findViewById(R.id.hp_bar_to_decrease);
+       // mImageDrawable = (ClipDrawable) clipHp1.getDrawable();
+
+
 
         Log.d(LOG_TAG, "onCreate: Fight Activity executed successfully ");
         Bundle data = getIntent().getExtras();
@@ -109,6 +120,7 @@ public class FightActivity extends AppCompatActivity {
             InfoPlayerTurns.setText("Joueur 2 à toi !");
             Log.d("Fight", "Basic_attack: ici le joueur 1 est censé attaquer le joueur 2 et lui ramener ses pv à :" + mJoueur2.getHealth().toString());
             hpP2.setText(mJoueur2.getHealth().toString());
+           // mImageDrawable.setLevel(5000);
 
         } else {
             mJoueur2.basicAttack(mJoueur1);
