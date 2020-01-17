@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.romain.jeuepicapp.activity.FightActivity;
+
 public class Warrior extends Character {
     public Warrior(int level, int strength, int agility, int intelligence, int number, int luck) {
         super(level, strength, agility, intelligence, number, luck);
@@ -32,6 +34,7 @@ public class Warrior extends Character {
             int damage = this.getStrength();
             Log.d("Fight", "basicAttack: la force est égal à " + this.getStrength() + " donc les degats subits seront de : " + damage);
             enemy.setHealth(enemy.getHealth()-damage);
+            FightActivity.addEventInfo("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
 
         } else {
@@ -50,6 +53,7 @@ public class Warrior extends Character {
         int loss = this.getStrength() / 2;
         enemy.setHealth(enemy.getHealth() - damage);
         this.setHealth(this.getHealth() - loss);
+        FightActivity.addEventInfo("");
 
     }
 

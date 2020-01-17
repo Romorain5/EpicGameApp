@@ -1,6 +1,9 @@
 package com.romain.jeuepicapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
@@ -15,9 +18,10 @@ import android.widget.Toast;
 import com.romain.jeuepicapp.Character;
 import com.romain.jeuepicapp.R;
 
+import java.util.ArrayList;
+
 // TODO Intent les characters directement depuis le MainActivity ( parcelable )
 
-// TODO Essayer d'utiliser les même bouton pour le controle des tours
 
 // TODO Recycler view pour faire un historique de se qu'il se passe ( regarder le TP du TopQuiz )
 
@@ -35,10 +39,12 @@ public class FightActivity extends AppCompatActivity {
    //public ClipDrawable mImageDrawable;
    //public  ImageView clipHp1;
 
+    public static RecyclerView recyclerView;
+
     public static final String EXTRA_PLAYER1 = "Player1";
     public static final String EXTRA_PLAYER2 = "Player2";
-
-
+    public static ArrayList<String> eventMessagesArray = new ArrayList<>();
+    static MyRecyclerViewAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,18 @@ public class FightActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
+
+
+        eventMessagesArray.add("Default event message");
+
+
+
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyRecyclerViewAdapter(this,eventMessagesArray);
+        recyclerView.setAdapter(adapter);
+
+
 
 
         //TEST CLIP HP BAR
@@ -115,11 +133,15 @@ public class FightActivity extends AppCompatActivity {
 
     public void Basic_attack(View view) {
         if (isPlayer1Turn) {
+
             mJoueur1.basicAttack(mJoueur2);
             isPlayer1Turn = false;
             InfoPlayerTurns.setText("Joueur 2 à toi !");
             Log.d("Fight", "Basic_attack: ici le joueur 1 est censé attaquer le joueur 2 et lui ramener ses pv à :" + mJoueur2.getHealth().toString());
             hpP2.setText(mJoueur2.getHealth().toString());
+            //recyclerView.smoothScrollToPosition(eventMessagesArray.size() - 1);
+            recyclerView.smoothScrollToPosition(eventMessagesArray.size() -1 );
+
            // mImageDrawable.setLevel(5000);
 
         } else {
@@ -127,6 +149,7 @@ public class FightActivity extends AppCompatActivity {
             isPlayer1Turn = true;
             InfoPlayerTurns.setText(R.string.J1_turn);
             hpP1.setText(mJoueur1.getHealth().toString());
+            recyclerView.smoothScrollToPosition(eventMessagesArray.size() -1 );
         }
     }
 
@@ -147,4 +170,11 @@ public class FightActivity extends AppCompatActivity {
 
         }
     }
+
+    public static void addEventInfo(String msg) {
+        eventMessagesArray.add(msg);
+        adapter.notifyDataSetChanged();
+    }
+
+
 }
