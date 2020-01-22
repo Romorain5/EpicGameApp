@@ -20,12 +20,6 @@ import com.romain.jeuepicapp.R;
 
 import java.util.ArrayList;
 
-// TODO Intent les characters directement depuis le MainActivity ( parcelable )
-
-
-// TODO Recycler view pour faire un historique de se qu'il se passe ( regarder le TP du TopQuiz )
-
-
 public class FightActivity extends AppCompatActivity {
 
     public static final  String LOG_TAG =
@@ -52,25 +46,10 @@ public class FightActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
-
-
-        eventMessagesArray.add("Default event message");
-
-
-
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyRecyclerViewAdapter(this,eventMessagesArray);
         recyclerView.setAdapter(adapter);
-
-
-
-
-        //TEST CLIP HP BAR
-       // clipHp1 = findViewById(R.id.hp_bar_to_decrease);
-       // mImageDrawable = (ClipDrawable) clipHp1.getDrawable();
-
-
 
         Log.d(LOG_TAG, "onCreate: Fight Activity executed successfully ");
         Bundle data = getIntent().getExtras();
@@ -139,17 +118,12 @@ public class FightActivity extends AppCompatActivity {
             InfoPlayerTurns.setText("Joueur 2 à toi !");
             Log.d("Fight", "Basic_attack: ici le joueur 1 est censé attaquer le joueur 2 et lui ramener ses pv à :" + mJoueur2.getHealth().toString());
             hpP2.setText(mJoueur2.getHealth().toString());
-            //recyclerView.smoothScrollToPosition(eventMessagesArray.size() - 1);
-            recyclerView.smoothScrollToPosition(eventMessagesArray.size() -1 );
-
-           // mImageDrawable.setLevel(5000);
 
         } else {
             mJoueur2.basicAttack(mJoueur1);
             isPlayer1Turn = true;
             InfoPlayerTurns.setText(R.string.J1_turn);
             hpP1.setText(mJoueur1.getHealth().toString());
-            recyclerView.smoothScrollToPosition(eventMessagesArray.size() -1 );
         }
     }
 
@@ -167,13 +141,13 @@ public class FightActivity extends AppCompatActivity {
 
             hpP1.setText(mJoueur1.getHealth().toString());
             hpP2.setText(mJoueur2.getHealth().toString());
-
         }
     }
 
     public static void addEventInfo(String msg) {
         eventMessagesArray.add(msg);
         adapter.notifyDataSetChanged();
+        recyclerView.smoothScrollToPosition(eventMessagesArray.size() -1 );
     }
 
 

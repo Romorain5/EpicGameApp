@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.romain.jeuepicapp.activity.FightActivity;
+
 public class Wizard  extends Character {
 
 
@@ -38,11 +40,15 @@ public class Wizard  extends Character {
             Log.d("Fight", "basicAttack: entree dans basic attack et les dmg seront de : " + damage);
             enemy.setHealth(enemy.getHealth()-damage);
 
+            FightActivity.addEventInfo("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+
 
         } else {
             Log.d("Fight", "basicAttack: entree dans basic attack du mage dans si il y a CC");
             int damage = this.getIntelligence() * 3;
             enemy.setHealth(enemy.getHealth()-damage);
+
+            FightActivity.addEventInfo(" COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
 
         }
@@ -58,6 +64,7 @@ public class Wizard  extends Character {
         int maxHealth = 5 * this.getLevel();
         int heal = (this.getIntelligence() ) * 2;
         this.setHealth(this.getHealth() + heal);
+        FightActivity.addEventInfo("Le joueur " + getNumber() + " se soigne et gagne " + heal + " points de vie !");
         if (this.getHealth() >= maxHealth ) {
             this.setHealth( maxHealth );
 

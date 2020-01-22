@@ -40,6 +40,7 @@ public class Warrior extends Character {
         } else {
             int damage = this.getStrength() * 3;
             enemy.setHealth(enemy.getHealth()-damage);
+            FightActivity.addEventInfo(" COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
 
         }
@@ -53,7 +54,7 @@ public class Warrior extends Character {
         int loss = this.getStrength() / 2;
         enemy.setHealth(enemy.getHealth() - damage);
         this.setHealth(this.getHealth() - loss);
-        FightActivity.addEventInfo("");
+        FightActivity.addEventInfo("Le joueur " + getNumber() + "utilise son attaque spéciale et inflige " + damage + " et se blesse  ( - " + loss + " ) !");
 
     }
 

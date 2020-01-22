@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.PlayerCreation"
+    android:gravity="center"
+    android:layout_gravity="center"
 
     >
     <RelativeLayout
@@ -68,63 +70,178 @@
 
     </RelativeLayout>
 
-    <EditText
-        android:layout_marginTop="15dp"
-        android:id="@+id/level_input2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Niveau du personnage"
-        android:inputType="number"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/Classes_choice"/>
+
+
 
     <LinearLayout
-        android:id="@+id/linear_layout_stats2"
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/level_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Classes_choice">
+
+    <TextView
+        android:id="@+id/LevelBar"
+        android:layout_marginTop="27dp"
+        android:layout_marginRight="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/level_input2"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@+id/fluid_slider_level"
+        android:layout_below="@+id/Classes_choice"
+        android:text="Level"
+        android:textSize="30dp"/>
+
+
+    <com.ramotion.fluidslider.FluidSlider
+    android:layout_below="@id/Classes_choice"
+    android:id="@+id/fluid_slider_level"
+    android:layout_width="290dp"
+    android:layout_height="wrap_content"
+    android:elevation="2dp"
+    app:size="small"
+    app:duration="@android:integer/config_mediumAnimTime"
+    app:bar_color="#63303030"/>
+
+</LinearLayout>
+
+    <LinearLayout
+
         android:gravity="center"
-        android:background="#63303030"
-        android:padding="15dp">
+        android:orientation="horizontal"
+        android:id="@+id/strength_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/level_linearLayout">
 
-        <EditText
-            android:id="@+id/strength_input2"
-            android:layout_width="200dp"
-            android:layout_height="75dp"
-            android:drawableLeft="@drawable/strenght_icon"
-            android:drawableTint="#FFEB3B"
-            android:hint="Force"
-            android:inputType="number" />
+        <TextView
+            android:id="@+id/StrengthBar"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/fluid_slider_level"
+            android:layout_below="@+id/Classes_choice"
+            android:text="Force"
+            android:textSize="30dp"/>
 
-        <EditText
-            android:id="@+id/intel_input2"
-            android:layout_width="200dp"
-            android:layout_height="75dp"
-            android:drawableLeft="@drawable/intelligence_icon"
-            android:drawablePadding="-15dp"
-            android:drawableTint="#E70000"
-            android:hint="Intelligence"
-            android:inputType="number" />
 
-        <EditText
-            android:id="@+id/agility_input2"
-            android:layout_width="200dp"
-            android:layout_height="75dp"
-            android:drawableLeft="@drawable/agility_icon"
-            android:drawableTint="#00E607"
-            android:hint="Agilité"
-            android:inputType="number" />
+        <com.ramotion.fluidslider.FluidSlider
+            android:layout_below="@id/Classes_choice"
+            android:id="@+id/fluid_slider_strength"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            app:size="small"
+            app:duration="@android:integer/config_mediumAnimTime"
+            app:bar_color="#63303030"/>
 
-        <EditText
-            android:id="@+id/chance_input2"
-            android:layout_width="200dp"
-            android:layout_height="75dp"
-            android:drawableLeft="@drawable/luck_icon"
-            android:drawableTint="#00E1FF"
-            android:hint="Chance"
-            android:inputType="number" />
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/inte_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/strength_linearLayout">
+
+        <TextView
+            android:id="@+id/InteBar"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/fluid_slider_level"
+            android:layout_below="@+id/Classes_choice"
+            android:text="Intelligence"
+            android:textSize="17dp"/>
+
+
+        <com.ramotion.fluidslider.FluidSlider
+            android:layout_below="@id/Classes_choice"
+            android:id="@+id/fluid_slider_inte"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            app:size="small"
+            app:duration="@android:integer/config_mediumAnimTime"
+            app:bar_color="#63303030"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/agility_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inte_linearLayout">
+
+        <TextView
+            android:id="@+id/AgilityBar"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/fluid_slider_level"
+            android:layout_below="@+id/Classes_choice"
+            android:text="Agilité"
+            android:textSize="30dp"/>
+
+
+        <com.ramotion.fluidslider.FluidSlider
+            android:layout_below="@id/Classes_choice"
+            android:id="@+id/fluid_slider_agility"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            app:size="small"
+            app:duration="@android:integer/config_mediumAnimTime"
+            app:bar_color="#63303030"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/luck_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/agility_linearLayout">
+
+        <TextView
+            android:id="@+id/LuckBar"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/fluid_slider_level"
+            android:layout_below="@+id/Classes_choice"
+            android:text="Chance"
+            android:textSize="30dp"/>
+
+
+        <com.ramotion.fluidslider.FluidSlider
+            android:layout_below="@id/Classes_choice"
+            android:id="@+id/fluid_slider_luck"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            app:size="small"
+            app:duration="@android:integer/config_mediumAnimTime"
+            app:bar_color="#63303030"/>
+
+    </LinearLayout>
+
+
+
+
+
 
         <Button
             android:layout_marginTop="20dp"
@@ -134,21 +251,23 @@
             android:text="confirmer"
             android:fontFamily="@font/nunito_semibold"
             android:background="@drawable/button_style"
-            android:padding="7dp"/>
+            android:padding="7dp"
+            android:layout_below="@+id/luck_linearLayout"/>
 
 
 
 
 
 
-    </LinearLayout>
+
 
 
     <Button
         android:id="@+id/activity_main_create_player2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linear_layout_stats2"
+        android:layout_toRightOf="@+id/ok_test_stats_btn2"
+        android:layout_below="@+id/luck_linearLayout"
         android:text="Créer le personnage !"
         android:textSize="18dp"
         android:layout_centerHorizontal="true"

@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.ramotion.fluidslider.FluidSlider;
 import com.romain.jeuepicapp.Character;
 import com.romain.jeuepicapp.Marksman;
 import com.romain.jeuepicapp.R;
@@ -27,11 +28,18 @@ import com.romain.jeuepicapp.Wizard;
 
 import java.util.Objects;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function1;
+
 //TODO comme l'activitée de google ( une activité pour la création des deux joueurs )
 
 // TODO nom des methode et attributs en camelCase
 
 public class PlayerCreation extends AppCompatActivity {
+
+    public static int statsPointsAvailable;
+    public static int levelSelected;
 
 
     public  String aplayer2Name;
@@ -72,17 +80,56 @@ public class PlayerCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_creation);
 
+
+        final FluidSlider theSliderLevel = findViewById(R.id.fluid_slider_level);
+        final FluidSlider theSliderStrength = findViewById(R.id.fluid_slider_strength);
+        final FluidSlider theSliderInte = findViewById(R.id.fluid_slider_inte);
+        final FluidSlider theSliderAgi = findViewById(R.id.fluid_slider_agility);
+        final FluidSlider theSliderLuck = findViewById(R.id.fluid_slider_luck);
+
+        int min = 0;
+        int max = 100;
+
+
+        theSliderLevel.setPosition(0f);
+        theSliderLevel.setStartText(String.valueOf(min));
+        theSliderLevel.setEndText(String.valueOf(max));
+
+        theSliderStrength.setPosition(0f);
+        theSliderStrength.setStartText(String.valueOf(min));
+        theSliderStrength.setEndText(String.valueOf(max));
+        theSliderStrength.setBubbleText(String.valueOf(0));
+
+        theSliderInte.setPosition(0f);
+        theSliderInte.setStartText(String.valueOf(min));
+        theSliderInte.setEndText(String.valueOf(max));
+        theSliderInte.setBubbleText(String.valueOf(0));
+
+        theSliderAgi.setPosition(0f);
+        theSliderAgi.setStartText(String.valueOf(min));
+        theSliderAgi.setEndText(String.valueOf(max));
+        theSliderAgi.setBubbleText(String.valueOf(0));
+
+        theSliderLuck.setPosition(0f);
+        theSliderLuck.setStartText(String.valueOf(min));
+        theSliderLuck.setEndText(String.valueOf(max));
+        theSliderLuck.setBubbleText(String.valueOf(0));
+
+
+
+
+
         warrior = findViewById(R.id.Warrior_choice_head);
         wizard = findViewById(R.id.Wizard_choice_head);
         marksman = findViewById(R.id.Marksman_choice_head);
 
         //p2Name = findViewById(R.id.input_player2_name);
 
-        p2Level = findViewById(R.id.level_input2);
-        p2Strength = findViewById(R.id.strength_input2);
-        p2Intel = findViewById(R.id.intel_input2);
-        p2Agility = findViewById(R.id.agility_input2);
-        p2Chance = findViewById(R.id.chance_input2);
+       //                             p2Level = findViewById(R.id.level_input2);    !!!!!!!!!!!!
+       // p2Strength = findViewById(R.id.strength_input2);
+       // p2Intel = findViewById(R.id.intel_input2);
+       // p2Agility = findViewById(R.id.agility_input2);
+       // p2Chance = findViewById(R.id.chance_input2);
         p2TestButton = findViewById(R.id.ok_test_stats_btn2);
 
         videoViewo = findViewById(R.id.video_view);
@@ -105,35 +152,181 @@ public class PlayerCreation extends AppCompatActivity {
             }
         });
 
-        p2TestButton.setOnClickListener(new View.OnClickListener() {
+
+        theSliderLevel.setEndTrackingListener(new Function0<Unit>() {
             @Override
-            public void onClick(View v) {
-                //aplayer2Name = p2Name.getText().toString(); //récupére le nom du joueur 1 et le stock dans Aplayer1Name
-                // Récupere et stock la force du joueur 1
-                String valueS = p2Strength.getText().toString();
-                aplayer2Str = Integer.parseInt(valueS);
-
-                String valueI = p2Intel.getText().toString();
-                aplayer2Int = Integer.parseInt(valueI);
-
-                String valueA = p2Agility.getText().toString();
-                aplayer2Agi = Integer.parseInt(valueA);
-
-                String valueC = p2Chance.getText().toString();
-                aplayer2Chance = Integer.parseInt(valueC);
-
-                String valueL = p2Level.getText().toString();
-                aplayer2Level = Integer.parseInt(valueL);
-
-                aplayer2TotStats = aplayer2Agi + aplayer2Chance + aplayer2Int + aplayer2Str;
-                if(aplayer2TotStats > aplayer2Level || aplayer2TotStats < 1) {
-                    Toast.makeText(PlayerCreation.this,"La somme des caractèristiques d'un joueur ne peut pas dépasser son niveau ! ",Toast.LENGTH_LONG).show();
-                    p2TestButton.setBackgroundColor(ContextCompat.getColor(PlayerCreation.this,R.color.red));
-                } else {
-                    p2TestButton.setBackgroundColor(ContextCompat.getColor(PlayerCreation.this,R.color.green));
+            public Unit invoke() {
+                levelSelected = Integer.parseInt(Objects.requireNonNull(theSliderLevel.getBubbleText()));
+                Log.d("STATS", "invoke: endTrackListener of level : la valeur de levelSelected est : " + levelSelected);
+                aplayer2Level = Integer.parseInt(theSliderLevel.getBubbleText());
 
 
-                }
+                return Unit.INSTANCE;
+            }
+        });
+
+
+        theSliderLevel.setPositionListener(new Function1<Float, Unit>() {
+            @Override
+            public Unit invoke(Float pos) {
+                final String value = String.valueOf( (int) (100 * pos));
+                theSliderLevel.setBubbleText(value);
+                statsPointsAvailable = Integer.parseInt(value);
+                return Unit.INSTANCE;
+            }
+        });
+// FORCE
+        theSliderStrength.setBeginTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                theSliderStrength.setEndText(String.valueOf(statsPointsAvailable));
+
+                return Unit.INSTANCE;
+            }
+        });
+
+        theSliderStrength.setEndTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+
+                statsPointsAvailable = ( levelSelected - ( Integer.parseInt((Objects.requireNonNull(theSliderStrength.getBubbleText()))  )
+                - Integer.parseInt((Objects.requireNonNull(theSliderInte.getBubbleText())) )
+                - Integer.parseInt((Objects.requireNonNull(theSliderAgi.getBubbleText())) )
+                - Integer.parseInt((Objects.requireNonNull(theSliderLuck.getBubbleText())) )
+                )
+
+                );
+                theSliderStrength.setEndText(String.valueOf(statsPointsAvailable));
+
+                aplayer2Str = Integer.parseInt(theSliderStrength.getBubbleText());
+
+                return Unit.INSTANCE;
+
+            }
+        });
+
+        theSliderStrength.setPositionListener(new Function1<Float, Unit>() {
+            @Override
+            public Unit invoke(Float pos) {
+                final String value = String.valueOf( (int) ( statsPointsAvailable * pos));
+                theSliderStrength.setBubbleText(value);
+
+                return Unit.INSTANCE;
+            }
+        });
+
+// INTELLIGENCE
+        theSliderInte.setBeginTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                theSliderInte.setEndText(String.valueOf(statsPointsAvailable));
+
+                return Unit.INSTANCE;
+            }
+        });
+
+        theSliderInte.setEndTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+
+                Log.d("STATS", "invoke: valeur de bubble text de stength: " + theSliderStrength.getBubbleText());
+
+                //TODO à mettre dans une fonction
+                statsPointsAvailable = ( levelSelected - (Integer.parseInt(Objects.requireNonNull(theSliderStrength.getBubbleText()))
+                        + Integer.parseInt(Objects.requireNonNull(theSliderInte.getBubbleText()))
+                        + Integer.parseInt(Objects.requireNonNull(theSliderAgi.getBubbleText()))
+                        + Integer.parseInt(Objects.requireNonNull(theSliderLuck.getBubbleText()))
+                )
+                );
+                Log.d("STATS", "invoke: val de statPointsAvailable = " + statsPointsAvailable);
+                theSliderInte.setEndText(String.valueOf(statsPointsAvailable));
+
+                aplayer2Int = Integer.parseInt(theSliderInte.getBubbleText());
+                return Unit.INSTANCE;
+
+            }
+        });
+
+        theSliderInte.setPositionListener(new Function1<Float, Unit>() {
+            @Override
+            public Unit invoke(Float pos) {
+                final String value = String.valueOf( (int) ( statsPointsAvailable * pos));
+                theSliderInte.setBubbleText(value);
+                return Unit.INSTANCE;
+            }
+        });
+
+// AGILITE
+        theSliderAgi.setBeginTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                theSliderAgi.setEndText(String.valueOf(statsPointsAvailable));
+
+                return Unit.INSTANCE;
+            }
+        });
+
+        theSliderAgi.setEndTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+
+                statsPointsAvailable = ( levelSelected - (Integer.parseInt((theSliderStrength.getBubbleText() )  )
+                        + Integer.parseInt((theSliderInte.getBubbleText() ) )
+                        + Integer.parseInt((theSliderAgi.getBubbleText() ) )
+                        + Integer.parseInt((theSliderLuck.getBubbleText() ) )
+                )
+                );
+                theSliderAgi.setEndText(String.valueOf(statsPointsAvailable));
+
+                aplayer2Agi = Integer.parseInt(theSliderAgi.getBubbleText());
+                return Unit.INSTANCE;
+
+            }
+        });
+
+        theSliderAgi.setPositionListener(new Function1<Float, Unit>() {
+            @Override
+            public Unit invoke(Float pos) {
+                final String value = String.valueOf( (int) ( statsPointsAvailable * pos));
+                theSliderAgi.setBubbleText(value);
+                return Unit.INSTANCE;
+            }
+        });
+
+// CHANCE
+        theSliderLuck.setBeginTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                theSliderLuck.setEndText(String.valueOf(statsPointsAvailable));
+
+                return Unit.INSTANCE;
+            }
+        });
+
+        theSliderLuck.setEndTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+
+                statsPointsAvailable = ( levelSelected - ( Integer.parseInt((theSliderStrength.getBubbleText() )  )
+                        + Integer.parseInt((theSliderInte.getBubbleText() ) )
+                        + Integer.parseInt((theSliderAgi.getBubbleText() ) )
+                        + Integer.parseInt((theSliderLuck.getBubbleText() ) )
+                )
+                );
+                theSliderLuck.setEndText(String.valueOf(statsPointsAvailable));
+
+                aplayer2Chance = Integer.parseInt(theSliderLuck.getBubbleText());
+                return Unit.INSTANCE;
+
+            }
+        });
+
+        theSliderLuck.setPositionListener(new Function1<Float, Unit>() {
+            @Override
+            public Unit invoke(Float pos) {
+                final String value = String.valueOf( (int) ( statsPointsAvailable * pos));
+                theSliderLuck.setBubbleText(value);
+                return Unit.INSTANCE;
             }
         });
     }
@@ -143,6 +336,7 @@ public class PlayerCreation extends AppCompatActivity {
 
         Intent intentToP1Creation = getIntent();
         int playerID = intentToP1Creation.getExtras().getInt(MainActivity.EXTRA_PLAYER_ID);
+
 
         //Intent intentb = new Intent(this, FightActivity.class);
         Intent replyIntent = new Intent();

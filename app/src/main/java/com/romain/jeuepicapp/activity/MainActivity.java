@@ -21,6 +21,15 @@ import com.romain.jeuepicapp.R;
 
 import butterknife.BindView;
 
+// TODO Ajouter les barres de vie
+// TODO Activer la mort
+// TODO Améliorer le background
+// TODO Regler et chercher les bugs possible des slidesBar lors de la selection des caractéristiques
+// TODO ajouter les restriction ( ne pas pourvoir sortir de la creation des personnages sans tout avoir )
+// TODO Ajouter les personnages lors du combat ( un vers la droite et un vers la gauche )
+// TODO Envoyer l'historique lors d'un basic ou special attack depuis les classes (wizard etc ) vers l'activité  en utilisant un return ( public String)
+// TODO Améliorer le design de la cration des personnages ( force plus grand que intelligence )
+// TODO Factoriser ( pas plus de 300 lignes par classe )
 
 
 public class MainActivity extends AppCompatActivity{
