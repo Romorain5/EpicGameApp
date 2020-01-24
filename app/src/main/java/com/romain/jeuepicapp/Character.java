@@ -55,9 +55,9 @@ public abstract class Character implements Parcelable {
 
 
 
-    public abstract void basicAttack(Character enemy);
-    public abstract void specialAttack(Character enemy);
-    public abstract void getClasse();
+    public abstract String basicAttack(Character enemy);
+    public abstract String specialAttack(Character enemy);
+    public abstract int getClasse();
 
 
     public boolean isCritical() {

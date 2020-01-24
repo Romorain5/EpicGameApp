@@ -1,7 +1,6 @@
 package com.romain.jeuepicapp;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.romain.jeuepicapp.activity.FightActivity;
@@ -28,19 +27,19 @@ public class Warrior extends Character {
     };
 
     @Override
-    public void basicAttack(Character enemy) {
+    public String basicAttack(Character enemy) {
         if (!isCritical()) {
             Log.d("Fight", "basicAttack:  entered in warrior basic attack" );
             int damage = this.getStrength();
             Log.d("Fight", "basicAttack: la force est égal à " + this.getStrength() + " donc les degats subits seront de : " + damage);
             enemy.setHealth(enemy.getHealth()-damage);
-            FightActivity.addEventInfo("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+            return ("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
 
         } else {
             int damage = this.getStrength() * 3;
             enemy.setHealth(enemy.getHealth()-damage);
-            FightActivity.addEventInfo(" COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+            return ("COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
 
         }
@@ -49,20 +48,19 @@ public class Warrior extends Character {
     }
 
     @Override
-    public void specialAttack(Character enemy) {
+    public String specialAttack(Character enemy) {
         int damage = 2 * this.getStrength() ;
         int loss = this.getStrength() / 2;
         enemy.setHealth(enemy.getHealth() - damage);
         this.setHealth(this.getHealth() - loss);
-        FightActivity.addEventInfo("Le joueur " + getNumber() + "utilise son attaque spéciale et inflige " + damage + " et se blesse  ( - " + loss + " ) !");
+
+        return ( "Le joueur " + getNumber() + "utilise son attaque spéciale et inflige " + damage + " et se blesse  ( - " + loss + " ) !"   );
+
 
     }
 
     @Override
-    public void getClasse() {
-       // System.out.println("Bonjour je suis un guerrier, je suis de niveau " + this.getLevel() + ", j'ai " + this.getStrength() + " en force, " + this.getAgility() + " en agilité et " + this.getIntelligence() + " en intelligence.");
-
+    public int getClasse() {
+        return 1;
     }
-
-
 }

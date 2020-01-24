@@ -29,20 +29,28 @@ public class  Marksman extends Character {
         }
     };
 
+    public int getClassID(){
+        return 3;
+    }
+
     @Override
-    public void basicAttack(Character enemy) {
+    public String basicAttack(Character enemy) {
         if (!isCritical()) {
             int damage = this.getAgility();
             enemy.setHealth(enemy.getHealth()-damage);
 
-            FightActivity.addEventInfo("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+            return ("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+
+            //FightActivity.addEventInfo("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
 
         } else {
             int damage = this.getAgility() * 3;
             enemy.setHealth(enemy.getHealth()-damage);
 
-            FightActivity.addEventInfo(" COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+            return ("COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+
+            //FightActivity.addEventInfo(" COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
         }
 
@@ -50,16 +58,19 @@ public class  Marksman extends Character {
     }
 
     @Override
-    public void specialAttack(Character enemy) {
+    public String specialAttack(Character enemy) {
         int addAgility = this.getAgility() / 2;
         this.setAgility(this.getAgility() + addAgility);
-        FightActivity.addEventInfo("Le joueur " + getNumber() + " se concentre et gagne " + addAgility + " en agilité !");
+        return ( "Le joueur " + getNumber() + " se concentre et gagne " + addAgility + " en agilité !" );
+
 
 
     }
 
     @Override
-    public void getClasse() {
+    public int getClasse() {
+
+        return 3;
 
     }
 

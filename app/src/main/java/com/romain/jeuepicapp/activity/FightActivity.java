@@ -2,21 +2,19 @@ package com.romain.jeuepicapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.romain.jeuepicapp.Character;
 import com.romain.jeuepicapp.R;
+import com.skydoves.progressview.ProgressView;
 
 import java.util.ArrayList;
 
@@ -25,13 +23,11 @@ public class FightActivity extends AppCompatActivity {
     public static final  String LOG_TAG =
             FightActivity.class.getSimpleName();
     private TextView InfoPlayerTurns;
-    private TextView hpP1;
-    private TextView hpP2;
     public Character mJoueur1 = null;
     public Character mJoueur2 = null;
     public static boolean isPlayer1Turn = true;
-   //public ClipDrawable mImageDrawable;
-   //public  ImageView clipHp1;
+    private ProgressView player1HealthBar;
+    private ProgressView player2HealthBar;
 
     public static RecyclerView recyclerView;
 
@@ -46,6 +42,18 @@ public class FightActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
+        player1HealthBar = findViewById(R.id.player1_healthbar);
+        player2HealthBar = findViewById(R.id.player2_healthbar);
+        ImageView player1Body = findViewById(R.id.imageViewBodyPlayer1);
+        ImageView player2Body = findViewById(R.id.imageViewBodyPlayer2);
+
+
+
+        player1HealthBar.setAutoAnimate(false);
+        player2HealthBar.setAutoAnimate(false);
+
+
+
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyRecyclerViewAdapter(this,eventMessagesArray);
@@ -57,32 +65,33 @@ public class FightActivity extends AppCompatActivity {
             mJoueur1 = data.getParcelable(EXTRA_PLAYER1);
         }
         mJoueur2 = data.getParcelable(EXTRA_PLAYER2);
-        Log.d("Fight", "onCreate: la force du joueur 1 est :  " + mJoueur1.getStrength());
+
+
+        player1HealthBar.setMax(mJoueur1.getHealth());
+        player2HealthBar.setMax(mJoueur2.getHealth());
+
+        player1HealthBar.setProgress(mJoueur1.getHealth());
+        player2HealthBar.setProgress(mJoueur2.getHealth());
+
+        defineCharactersBody(mJoueur1, player1Body);
+        defineCharactersBody(mJoueur2, player2Body);
+
+
 
 
         InfoPlayerTurns = findViewById(R.id.info_player_turns);
-        hpP1 = findViewById(R.id.figth_activity_p1_hp);
-        hpP2 = findViewById(R.id.figth_activity_p2_hp);
 
-        hpP1.setText(Integer.toString(mJoueur1.getHealth()));
-        hpP2.setText(Integer.toString(mJoueur2.getHealth()));
-        Log.d("Fight", "onCreate: le niveau du joueur 1 est " + mJoueur1.getLevel() + " et donc ses point de vie sont de : " + mJoueur1.getHealth());
-        Log.d("Fight", "onCreate: le niveau du joueur 2 est " + mJoueur2.getLevel() + " et donc ses point de vie sont de : " + mJoueur2.getHealth());
-        Log.d("Fight", "onCreate: l'id de classe du joueur 1 est: ");
+
         if (mJoueur1.getIntelligence() > mJoueur2.getIntelligence()) {
             isPlayer1Turn = true;
-            InfoPlayerTurns.setText("Joueur 1, à toi !");
+            InfoPlayerTurns.setText(R.string.J1_turn);
         } else {
             isPlayer1Turn = false;
-            InfoPlayerTurns.setText("Joueur 2, à toi !");
+            InfoPlayerTurns.setText(R.string.J2_turn);
         }
 
 
     }
-
-
-
-
 
 
 
@@ -90,64 +99,93 @@ public class FightActivity extends AppCompatActivity {
         if (mJoueur1.getHealth() <= 0) {
 
             Toast.makeText(this, "Le joueur 1 est mort ! Le joueur 2 a gagné !", Toast.LENGTH_LONG).show();
+            finish();
         } else if (mJoueur2.getHealth() <= 0 ) {
 
             Toast.makeText(this, "Le joueur 2 est mort ! Le joueur 1 a gagné !", Toast.LENGTH_LONG).show();
+            finish();
         }
 
     }
-
-    public void BA_p1_to_p2() {
-        Log.d("Fight", "BA_p1_to_p2: Clique du bouton attaque basique");
-        mJoueur1.basicAttack(mJoueur2);
-        Log.d("Fight", "BA_p1_to_p2: temoins apres l'attaque ");
-        isPlayer1Turn = false;
-        InfoPlayerTurns.setText(R.string.J2_turn);
-        Log.d("Fight", "BA_p1_to_p2: temoins apres changement de text - au tour du joueur 2 ");
-        Log.d("Fight", "BA_p1_to_p2: Et apres réactualisation de l'affichage des point de vie du joueur 2.");
-        hpP2.setText(mJoueur2.getHealth().toString());
-    }
-
 
 
     public void Basic_attack(View view) {
         if (isPlayer1Turn) {
-
-            mJoueur1.basicAttack(mJoueur2);
-            isPlayer1Turn = false;
-            InfoPlayerTurns.setText("Joueur 2 à toi !");
-            Log.d("Fight", "Basic_attack: ici le joueur 1 est censé attaquer le joueur 2 et lui ramener ses pv à :" + mJoueur2.getHealth().toString());
-            hpP2.setText(mJoueur2.getHealth().toString());
-
+            addEventInfo(mJoueur1.basicAttack(mJoueur2));
         } else {
-            mJoueur2.basicAttack(mJoueur1);
-            isPlayer1Turn = true;
-            InfoPlayerTurns.setText(R.string.J1_turn);
-            hpP1.setText(mJoueur1.getHealth().toString());
+            addEventInfo(mJoueur2.basicAttack(mJoueur1));
         }
+        updateHealthBars();
+        switchTurn();
+        isSomeoneDead();
     }
 
     public void Special_attack(View view) {
         if (isPlayer1Turn) {
-            mJoueur1.specialAttack(mJoueur2);
-            isPlayer1Turn = false;
-            InfoPlayerTurns.setText(R.string.J2_turn);
-            hpP1.setText(mJoueur1.getHealth().toString());
-            hpP2.setText(mJoueur2.getHealth().toString());
+            addEventInfo(mJoueur1.specialAttack(mJoueur2));
         } else {
-            mJoueur2.specialAttack(mJoueur1);
-            isPlayer1Turn = true;
-            InfoPlayerTurns.setText(R.string.J1_turn);
-
-            hpP1.setText(mJoueur1.getHealth().toString());
-            hpP2.setText(mJoueur2.getHealth().toString());
+            addEventInfo(mJoueur2.specialAttack(mJoueur1));
         }
+        updateHealthBars();
+        switchTurn();
+        isSomeoneDead();
+
     }
 
     public static void addEventInfo(String msg) {
         eventMessagesArray.add(msg);
         adapter.notifyDataSetChanged();
         recyclerView.smoothScrollToPosition(eventMessagesArray.size() -1 );
+    }
+
+    public static void defineCharactersBody(Character player, ImageView img) {
+
+        if (player.getNumber() == 1) {
+            switch (player.getClasse()) {
+                case 1:
+                    img.setImageResource(R.drawable.warrior_full_body_facing_right);
+                    break;
+                case 2:
+                    img.setImageResource(R.drawable.wizard_full_body_facing_right);
+                    break;
+                case 3:
+                    img.setImageResource(R.drawable.marksman_full_body_facing_right);
+                    break;
+            }
+
+        } else if (player.getNumber() == 2) {
+            switch (player.getClasse()) {
+                case 1:
+                    img.setImageResource(R.drawable.warrior_full_body_facing_left);
+                    break;
+                case 2:
+                    img.setImageResource(R.drawable.wizard_full_body_facing_left);
+                    break;
+                case 3:
+                    img.setImageResource(R.drawable.marksman_full_body_facing_left);
+                    break;
+            }
+        }
+
+    }
+
+    public void updateHealthBars() {
+        player2HealthBar.setProgress(mJoueur2.getHealth());
+        player1HealthBar.setProgress(mJoueur1.getHealth());
+    }
+
+    public void switchTurn() {
+        if (isPlayer1Turn) {
+            isPlayer1Turn = false;
+            InfoPlayerTurns.setText(R.string.J2_turn);
+
+        } else {
+            isPlayer1Turn = true;
+            InfoPlayerTurns.setText(R.string.J1_turn);
+
+        }
+
+
     }
 
 

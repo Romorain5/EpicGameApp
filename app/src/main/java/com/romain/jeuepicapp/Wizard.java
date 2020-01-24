@@ -1,7 +1,6 @@
 package com.romain.jeuepicapp;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.romain.jeuepicapp.activity.FightActivity;
@@ -31,7 +30,7 @@ public class Wizard  extends Character {
     };
 
     @Override
-    public void basicAttack(Character enemy) {
+    public String basicAttack(Character enemy) {
 
         Log.d("Fight", "basicAttack: entree dans basic attack du mage avant le IF");
         if (!isCritical()) {
@@ -40,7 +39,7 @@ public class Wizard  extends Character {
             Log.d("Fight", "basicAttack: entree dans basic attack et les dmg seront de : " + damage);
             enemy.setHealth(enemy.getHealth()-damage);
 
-            FightActivity.addEventInfo("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+            return ("Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
 
         } else {
@@ -48,7 +47,7 @@ public class Wizard  extends Character {
             int damage = this.getIntelligence() * 3;
             enemy.setHealth(enemy.getHealth()-damage);
 
-            FightActivity.addEventInfo(" COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
+            return ("COUP CRITIQUE !! Le joueur " + getNumber() + " attaque et inflige " + damage + " points de dégats ! ");
 
 
         }
@@ -60,22 +59,23 @@ public class Wizard  extends Character {
 
 
     @Override
-    public void specialAttack(Character enemy) {
+    public String specialAttack(Character enemy) {
         int maxHealth = 5 * this.getLevel();
         int heal = (this.getIntelligence() ) * 2;
         this.setHealth(this.getHealth() + heal);
-        FightActivity.addEventInfo("Le joueur " + getNumber() + " se soigne et gagne " + heal + " points de vie !");
+
         if (this.getHealth() >= maxHealth ) {
             this.setHealth( maxHealth );
 
         }
+        return ( "Le joueur " + getNumber() + " se soigne et gagne " + heal + " points de vie !" );
     }
 
     @Override
-    public void getClasse() {
+    public int getClasse() {
 
 
-
+        return 2;
     }
 
 

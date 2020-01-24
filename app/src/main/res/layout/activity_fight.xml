@@ -28,32 +28,31 @@
     android:layout_marginTop="30dp"
     android:id="@+id/linear_layout_fight_p1">
 
+
+
+
+<com.skydoves.progressview.ProgressView
+    android:id="@+id/player1_healthbar"
+    android:layout_width="150dp"
+    android:layout_height="20dp"
+    app:progressView_colorBackground="@color/white"
+        app:progressView_colorProgress="@android:color/holo_green_light"
+        app:progressView_progress="40"
+        app:progressView_max="100"
+        app:progressView_autoAnimate="true"
+
+
+    />
         <TextView
-        android:id="@+id/HP1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HP Player 1 : " />
+            android:id="@+id/figth_activity_p1_hp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Player 1 HP not defined :/ "
+            android:layout_below="@+id/player1_healthbar"/>
 
-         <TextView
-         android:id="@+id/figth_activity_p1_hp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Player 1 HP not defined :/ "
-        android:layout_below="@+id/HP1"/>
 
-        <ImageView
-            android:layout_below="@id/figth_activity_p1_hp"
-            android:layout_width="150dp"
-            android:layout_height="20dp"
-            android:background="@android:color/holo_red_light"
-            />
-        <ImageView
-            android:id="@+id/hp_bar_to_decrease"
-            android:layout_below="@id/figth_activity_p1_hp"
-            android:layout_width="150dp"
-            android:layout_height="20dp"
-            android:background="@android:color/holo_green_light"
-            />
+
+
     </RelativeLayout>
 
     <LinearLayout
@@ -65,11 +64,21 @@
     android:layout_marginTop="30dp"
     android:id="@+id/linear_layout_fight_p2">
 
+        <com.skydoves.progressview.ProgressView
+            android:id="@+id/player2_healthbar"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            app:progressView_colorBackground="@color/white"
+            app:progressView_colorProgress="@android:color/holo_green_light"
+            app:progressView_progress="40"
+            app:progressView_max="100"
+            app:progressView_autoAnimate="true"
 
-         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HP Player 2" />
+
+            />
+
+
+
         <TextView
             android:id="@+id/figth_activity_p2_hp"
             android:layout_width="wrap_content"
@@ -78,12 +87,38 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/characters_body"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@+id/linear_layout_fight_p1">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_below="@id/linear_layout_fight_p1"
-        android:layout_width="300dp"
-        android:layout_height="125dp"/>
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:id="@+id/imageViewBodyPlayer1"
+            android:layout_marginRight="90dp"
+            android:src="@drawable/warrior_full_body_facing_right"/>
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:id="@+id/imageViewBodyPlayer2"
+            android:src="@drawable/warrior_full_body_facing_left"/>
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
 
     <TextView
         android:layout_below="@id/linear_layout_fight_p1"
@@ -134,7 +169,13 @@
             android:padding="15dp"/>
 
     </LinearLayout>
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="15dp"
+        android:id="@+id/recycler_view"
+        android:layout_below="@id/linear_layout_control"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#63303030"/>
 
 
 
