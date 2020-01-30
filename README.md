@@ -1,5 +1,5 @@
 # EpicGameApp
-Jeu pic application
+Jeu Epic application
 
 Jeu de combat en tour par tour créé depuis un TP d'un des cours du site Openclassrooms
 Le projet a d'abord été fait en Java sur IntelliJ puis sous forme d'application sur Android Studio.
